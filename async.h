@@ -4,5 +4,6 @@
 #include <nan.h>
 
 NAN_METHOD(Install);
+NAN_METHOD(Uninstall);
 
 #endif

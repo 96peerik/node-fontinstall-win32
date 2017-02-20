@@ -55,10 +55,57 @@ private:
   int res;
 };
 
+class FontUninstallerWorker : public AsyncWorker {
+ public:
+  FontUninstallerWorker(Callback *callback, std::wstring filename)
+    : AsyncWorker(callback), filename(filename), res(false) {}
+  ~FontUninstallerWorker() {}
+
+  // Executed in worker thd
+  void Execute () {
+    res = UninstallFont(filename);
+    if (res != true) {
+      SetErrorMessage(V8Utils::GetErrorStdStr(res).c_str());
+    }
+  }
+
+  // Executed in main thd
+  void HandleOKCallback () {
+    HandleScope scope;
+
+    Local<Value> argv[] = {
+        Null()
+    };
+
+    callback->Call(1, argv);
+  }
+
+  void HandleErrorCallback() {
+    HandleScope scope;
+    Local<Value> argv[] = {
+      Nan::Error(Nan::New<v8::String>(ErrorMessage()).ToLocalChecked())
+    };
+
+    callback->Call(1, argv);
+  }
+
+private:
+  wstring filename;
+  bool res;
+};
+
 // Asynchronous access
 NAN_METHOD(Install) {
   std::wstring filename = V8Utils::v8StrToWStr(info[0]->ToString());
   Callback *callback = new Callback(info[1].As<Function>());
 
   AsyncQueueWorker(new FontInstallerWorker(callback, filename));
+}
+
+// Asynchronous access
+NAN_METHOD(Uninstall) {
+  std::wstring filename = V8Utils::v8StrToWStr(info[0]->ToString());
+  Callback *callback = new Callback(info[1].As<Function>());
+
+  AsyncQueueWorker(new FontUninstallerWorker(callback, filename));
 }

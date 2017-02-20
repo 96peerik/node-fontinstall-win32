@@ -16,6 +16,12 @@ NAN_MODULE_INIT(InitAll) {
 
   Set(target, New<String>("install").ToLocalChecked(),
     GetFunction(New<FunctionTemplate>(Install)).ToLocalChecked());
+
+  Set(target, New<String>("uninstallSync").ToLocalChecked(),
+    GetFunction(New<FunctionTemplate>(UninstallSync)).ToLocalChecked());
+
+  Set(target, New<String>("uninstall").ToLocalChecked(),
+    GetFunction(New<FunctionTemplate>(Uninstall)).ToLocalChecked());
 }
 
 NODE_MODULE(FontInstaller, InitAll)

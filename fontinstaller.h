@@ -4,6 +4,5 @@
 #include <string>
 
 int InstallFont(std::wstring filename);
-std::wstring basename(std::wstring filename);
-
+bool UninstallFont(std::wstring filename);
 #endif

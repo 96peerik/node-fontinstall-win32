@@ -4,5 +4,6 @@
 #include <nan.h>
 
 NAN_METHOD(InstallSync);
+NAN_METHOD(UninstallSync);
 
 #endif

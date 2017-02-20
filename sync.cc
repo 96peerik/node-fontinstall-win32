@@ -8,3 +8,9 @@ NAN_METHOD(InstallSync) {
   int err = InstallFont(filename);
   info.GetReturnValue().Set(err);
 }
+
+NAN_METHOD(UninstallSync) {
+  wstring filename = V8Utils::v8StrToWStr(info[0]->ToString());
+  bool err = UninstallFont(filename);
+  info.GetReturnValue().Set(err);
+}
