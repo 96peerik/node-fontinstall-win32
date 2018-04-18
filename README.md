@@ -1,7 +1,7 @@
-#node-fontinstall-win32
+# node-fontinstall-win32
 Windows-only font installation module
 
-###Install
+### Install
 npm install node-fontinstall-win32
 
 --
@@ -15,10 +15,9 @@ To build this library, following components are needed:
 * Python environment variable PYTHON={python-dir including exe}
 
 
-###Example code
+### Example code
 
-```
-#!javascript
+```javascript
 
 const Installer = require('node-fontinstall-win32').FontInstaller;
 let installer = new Installer();
